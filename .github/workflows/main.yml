@@ -56,7 +56,6 @@ jobs:
               Write-Error "User creation failed"
               exit 1
           }
-
           
           - name: Install Tailscale
             run: |
@@ -71,9 +70,6 @@ jobs:
           
               Write-Host "Cleaning up..."
               Remove-Item $installerPath -Force
-
-
-        
 
       - name: Establish Tailscale Connection
         run: |
