@@ -57,20 +57,23 @@ jobs:
               exit 1
           }
 
-- name: Install Tailscale
-        run: |
-          $tsUrl = "https://pkgs.tailscale.com/stable/tailscale-setup-1.82.0-amd64.msi"
-          $installerPath = "$env:TEMP\tailscale.msi"
           
-          Write-Host "Downloading Tailscale..."
-          Invoke-WebRequest -Uri $tsUrl -OutFile $installerPath
+          - name: Install Tailscale
+            run: |
+              $tsUrl = "https://pkgs.tailscale.com/stable/tailscale-setup-1.82.0-amd64.msi"
+              $installerPath = "$env:TEMP\tailscale.msi"
           
-          Write-Host "Installing Tailscale..."
-          # التعديل هنا: شيلنا الفواصل وكتبنا الأمر كله كجملة واحدة
-          Start-Process msiexec.exe -ArgumentList "/i `"$installerPath`" /quiet /norestart" -Wait
+              Write-Host "Downloading Tailscale..."
+              Invoke-WebRequest -Uri $tsUrl -OutFile $installerPath
           
-          Write-Host "Cleaning up..."
-          Remove-Item $installerPath -Force
+              Write-Host "Installing Tailscale..."
+              Start-Process msiexec.exe -ArgumentList "/i `"$installerPath`" /quiet /norestart" -Wait
+          
+              Write-Host "Cleaning up..."
+              Remove-Item $installerPath -Force
+
+
+        
 
       - name: Establish Tailscale Connection
         run: |
